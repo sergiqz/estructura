@@ -83,7 +83,7 @@ void cola<T>::push_cola(const T & d){
 
 template <class T>
 void cola<T>::pop_cola(){
-	delete linked_list<T>::p_head->dato;
+	this->remove_front();
 }
 
 template <class T>
@@ -93,5 +93,5 @@ void pila<T>::push_pila(const T & d){
 
 template <class T>
 void pila<T>::pop_pila(){
-
+	this->remove_back();
 }
