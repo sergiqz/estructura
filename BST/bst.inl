@@ -68,3 +68,85 @@ void bst<K,D>::print(node<K,D> *n){
         }
     }
 }
+
+template <class K, class D>
+void bst<K,D>::remove(const K & key){
+	remove(&p_root,key);
+}
+
+template <class K, class D>
+void bst<K,D>::remove(node<K,D>** n,const K & key){
+	if(*n == NULL) return ;//No es encontrar el valor X de los nodos 
+    if(key <(*n)->key) 
+    { 
+         remove(&(*n)->p_child[0], key);//Si X es inferior al valor del nodo, sigue en el árbol de la izquierda elimina el nodo X 
+    }
+ 
+    else if(key > (*n)->key)
+    { 
+         remove(&(*n)->p_child[1], key);//Si X es mayor que el valor del nodo, sigue en el nodo eliminar X subárbol 
+    } 
+ 
+    else//Si son iguales, el nodo es eliminar nodo 
+    { 
+        if((*n)->p_child[0] and (*n)->p_child[1])//El nodo tiene dos hijos 
+        { 
+            node<K,D>* temp = (*n)->p_child[1];//Nodos hijo temp hacia la derecha 
+            while(temp->p_child[0]!=NULL) temp=temp->p_child[0];//Encontrar un mínimo de nodos
+            //A la derecha en el valor mínimo de nodos subárbol de asignar a este nodo 
+            (*n)->key = temp->key;
+            (*n)->data = temp->data;
+            remove(&(*n)->p_child[1],temp->key);//Eliminar nodos en el valor mínimo de la derecha subárbol 
+        } 
+        else//El nodo tiene un hijo o 1 0 
+        { 
+            node<K,D>* temp = *n; 
+            if((*n)->p_child[0] == NULL)//Hijo o no, el hijo de la derecha 
+            	(*n) = (*n)->p_child[1]; 
+            else if((*n)->p_child[1] == NULL)//A la izquierda, hijo 
+            	(*n) = (*n)->p_child[0];
+            temp = NULL; 
+            delete(temp); 
+        } 
+	}
+}
+
+template <class K, class D>
+bool bst<K,D>::remove_v2(K key){
+	node<K,D> **n;
+	n=&p_root;
+	node<K,D> *tmp;
+	node<K,D> *tmp2;
+
+	if(find(key,n)==true){
+		tmp=*n;
+		if(tmp->p_child[0]==NULL and tmp->p_child[1]==NULL){
+			*n=NULL;
+			delete tmp;
+		}
+		else if(tmp->p_child[0]!=NULL and tmp->p_child[1]==NULL){
+				*n=(*n)->p_child[0];
+				tmp->p_child[0]=NULL;
+				delete tmp;
+		}
+		else if(tmp->p_child[0]==NULL and tmp->p_child[1]!=NULL){
+				*n=(*n)->p_child[1];
+				tmp->p_child[1]=NULL;
+				delete tmp;
+		}
+		else{
+			node<K,D> *pd; //padre
+			node<K,D> *aux;
+			tmp=*n;
+			aux=tmp->p_child[0];
+			while(aux->p_child[1]!=NULL){
+				pd=aux;
+				aux=aux->p_child[1];
+			}
+			(*n)->key=aux->key;
+			pd->p_child[0]=NULL;
+			pd->p_child[1]=NULL;
+			delete aux;
+		}
+	}
+}

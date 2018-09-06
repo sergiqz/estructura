@@ -32,7 +32,10 @@ public:
 	bool insert(const K & key, const D & data);
 	void print();
 	void print(node<K,D> *n);
-	
+	void remove(const K & key);
+	void remove(node<K,D>** n,const K & key);
+	bool remove_v2(K key);
+
 private:
 	bool find(const K & key, node<K,D> **& n);
 };
