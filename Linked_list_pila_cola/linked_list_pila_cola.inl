@@ -69,6 +69,7 @@ void linked_list<T>::remove_back(){
 
 template <class T>
 void linked_list<T>::print(){
+	
 	nodo<T> *temp=p_head;
 	while(temp){
 		temp->print();
@@ -93,5 +94,5 @@ void pila<T>::push_pila(const T & d){
 
 template <class T>
 void pila<T>::pop_pila(){
-	this->remove_back();
+	this-> remove_back();
 }
