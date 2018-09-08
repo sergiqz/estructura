@@ -134,6 +134,14 @@ bool bst<K,D>::remove_v2(K key){
 				tmp->p_child[1]=NULL;
 				delete tmp;
 		}
+		
+		/*
+		bool c=tmp->p_child[0]==NULL;
+		*n=(*n)->p_child[c];
+		tmp->p_child[c]=NULL;
+		delete tmp;
+		*/
+
 		else{
 			node<K,D> *pd; //padre
 			node<K,D> *aux;
