@@ -2,6 +2,7 @@
 #define BST_H
 
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 template <class K, class D>
@@ -25,8 +26,9 @@ class bst
 {
 private:
 	node<K,D> *p_root;
+	ofstream os;
 public:
-	bst():p_root(NULL){};
+	bst():p_root(NULL), os("grap.dot"){};
 	virtual ~bst(){};
 	bool find(const K & key, D & data);
 	bool insert(const K & key, const D & data);
@@ -35,7 +37,6 @@ public:
 	void remove(const K & key);
 	void remove(node<K,D>** n,const K & key);
 	bool remove_v2(K key);
-
 private:
 	bool find(const K & key, node<K,D> **& n);
 };

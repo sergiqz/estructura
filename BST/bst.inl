@@ -43,10 +43,10 @@ bool bst<K,D>::insert(const K & key, const D & data){
 
 template <class K, class D>
 void bst<K,D>::print(){
-	cout<<"graph {"<<endl;
-	cout<<p_root->key<<endl;
+	os<<"graph {"<<endl;
+	os<<p_root->key<<endl;
 	print(p_root);
-	cout<<"}"<<endl;
+	os<<"}"<<endl;
 }
 
 template <class K, class D>
@@ -55,15 +55,15 @@ void bst<K,D>::print(node<K,D> *n){
     {
         
         if(n->p_child[0]!=NULL){
-            cout<<n->key;
-            cout<<"--";
-            cout<<n->p_child[0]->key<<endl;
+            os<<n->key;
+            os<<"--";
+            os<<n->p_child[0]->key<<endl;
             print(n->p_child[0]);
         }
         if(n->p_child[1]!=NULL){
-            cout<<n->key;
-            cout<<"--";
-            cout<<n->p_child[1]->key<<endl;
+            os<<n->key;
+            os<<"--";
+            os<<n->p_child[1]->key<<endl;
             print(n->p_child[1]);
         }
     }
@@ -118,7 +118,7 @@ bool bst<K,D>::remove_v2(K key){
 	node<K,D> *tmp;
 	node<K,D> *tmp2;
 
-	if(find(key,n)==true){
+	if(find(key,n)){
 		tmp=*n;
 		if(tmp->p_child[0]==NULL and tmp->p_child[1]==NULL){
 			*n=NULL;
@@ -147,14 +147,22 @@ bool bst<K,D>::remove_v2(K key){
 			node<K,D> *aux;
 			tmp=*n;
 			aux=tmp->p_child[0];
-			while(aux->p_child[1]!=NULL){
-				pd=aux;
-				aux=aux->p_child[1];
-			}
-			(*n)->key=aux->key;
-			pd->p_child[0]=NULL;
-			pd->p_child[1]=NULL;
-			delete aux;
-		}
+			pd=p_root;
+			if(aux->p_child[1]==NULL){
+                tmp->key=aux->key;
+                tmp->p_child[0]=aux->p_child[0];
+                delete aux;
+            }
+            else{
+                while((aux->p_child[1]!=NULL)){
+                    pd=aux;
+                    aux=aux->p_child[1];
+                }
+
+                tmp->key=aux->key;
+                pd->p_child[1]=NULL;
+            	delete aux;
+        	}
+        }	
 	}
 }
