@@ -31,12 +31,18 @@ private:
 	ofstream os;
 public:
 	avl():p_root(NULL), os("grap.dot"){};
+	bool find(node<K,D> **& n, const K & key);
+	bool find(const K & key, D & data);
 	void insert(const K & key,const D & data);
 	bool insert(node<K,D> **n,const K & key,const D & data);
 	bool checkNbalalnce(node<K,D> **n);
 	bool turnSide(node<K,D> **n, bool side);
 	int getSize();
 	int getSize(node<K,D> *n);
+	bool remove(node<K,D> **n);
+	bool remove(const K & key);
+	bool remove(node<K,D> **n, const K & key);
+	node<K,D>* getParent(const K & key);
 	void print(node<K,D> *n);
 	void print();
 	virtual ~avl(){};

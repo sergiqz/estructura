@@ -20,6 +20,8 @@ int main(){
 	//avl.print();
 	//bst.remove_v2(2);
 	
+	//avl.print();
+	avl.remove(64);
 	avl.print();
 	return 0;
 }
