@@ -8,13 +8,14 @@ node<K,D>::node(const K & k, const D & d){
 }
 
 template<class K,class D>
-void avl<K,D>::insert(const K key,const D data)
+void avl<K,D>::insert(const K & key,const D & data)
 { 
-    insert(&p_root,key,data); 
+	node<K,D>**searcher = &this->p_root;
+    insert(searcher,key,data); 
 } 
 
 template<class K,class D>
-bool avl<K,D>::insert(node<K,D> **n,K key,D data)
+bool avl<K,D>::insert(node<K,D> **n,const K & key,const D & data)
 {
 	if((*n)==NULL){
 		(*n)=new node<K,D>(key,data);
@@ -35,7 +36,7 @@ template<class K,class D>
 bool avl<K,D>::checkNbalalnce(node<K,D> **n)
 {
 	(*n)->BalanceFactor=getSize((*n)->p_child[0])-getSize((*n)->p_child[1]);
-	if((*n)->p_child[0]->BalanceFactor==2){
+	if((*n)->BalanceFactor==2){
 		if((*n)->p_child[0]->BalanceFactor==1){
 			turnSide(n,0);
 		}
