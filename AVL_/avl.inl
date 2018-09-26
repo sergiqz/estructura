@@ -84,26 +84,26 @@ int avl<K,D>::getSize(node<K,D> *n)
 	}
 	return max(getSize(n->p_child[0]),getSize(n->p_child[1]))+1;
 }
-
+/*
 template <class K, class D>
 void avl<K,D>::print(int num){
 	string s = to_string(num);
 	string pt1="dot.lnk -Tpng  < grap.dot > ";
 	string pt3=".png";
 	string rt=""+ pt1 +""+ s +""+ pt3 +"";
-	char *buffer = rt.c_str();
+	const char *buffer = rt.c_str();
 	os<<"graph {"<<endl;
 	os<<p_root->key<<endl;
 	print(p_root);
 	os<<"}"<<endl;
+	os.close();
 	system(buffer);
 }
 
 template <class K, class D>
 void avl<K,D>::print(node<K,D> *n){
 	if(n!=NULL)
-    {
-        
+    {    
         if(n->p_child[0]!=NULL){
             os<<n->key;
             os<<"--";
@@ -115,6 +115,75 @@ void avl<K,D>::print(node<K,D> *n){
             os<<"--";
             os<<n->p_child[1]->key<<endl;
             print(n->p_child[1]);
+        }
+    }
+}
+*/
+template <class K, class D>
+void avl<K,D>::printOficial(int num){
+	string num_arch = to_string(num);
+	string ext1 = ".dot";
+	string num_xt1=""+ num_arch +""+ ext1 +"";
+	ofstream es(num_xt1);
+	////////
+	string s = to_string(num);
+	string pt1="dot.lnk -Tpng  < ";
+	string pt2=" > ";
+	string pt3=".png";
+	string rt=""+ pt1 +""+ num_xt1 +""+ pt2 +""+ s +""+ pt3 +"";
+	const char *buffer = rt.c_str();
+	////////
+	es<<"graph {"<<endl;
+	es<<p_root->key<<endl;
+	printOficial(es,p_root);
+	es<<"}"<<endl;
+	es.close();
+	system(buffer);
+}
+
+template <class K, class D>
+void avl<K,D>::printOficial(ofstream & es, node<K,D> *n){
+	if(n!=NULL)
+    {    
+        if(n->p_child[0]!=NULL){
+            es<<n->key;
+            es<<"--";
+            es<<n->p_child[0]->key<<endl;
+            printOficial(es,n->p_child[0]);
+        }
+        if(n->p_child[1]!=NULL){
+            es<<n->key;
+            es<<"--";
+            es<<n->p_child[1]->key<<endl;
+            printOficial(es,n->p_child[1]);
+        }
+    }
+}
+
+template <class K, class D>
+void avl<K,D>::print2(){
+	cout<<"graph {"<<endl;
+	cout<<p_root->key<<endl;
+	print2(p_root);
+	cout<<"}"<<endl;
+	//system(buffer);
+}
+
+template <class K, class D>
+void avl<K,D>::print2(node<K,D> *n){
+	if(n!=NULL)
+    {    
+        if(n->p_child[0]!=NULL){
+            cout<<n->key;
+            cout<<"--";
+            cout<<n->p_child[0]->key<<endl;
+            print2(n->p_child[0]);
+        }
+        if(n->p_child[1]!=NULL){
+            cout<<n->key;
+            cout<<"--";
+            cout<<n->p_child[1]->key<<endl;
+            print2(n->p_child[1]);
         }
     }
 }

@@ -28,9 +28,9 @@ class avl
 {
 private:
 	node<K,D> *p_root;
-	ofstream os;
+	//ofstream os;
 public:
-	avl():p_root(NULL), os("grap.dot"){};
+	avl():p_root(NULL)/*, os("grap.dot")*/{};
 	bool find(node<K,D> **& n, const K & key);
 	bool find(const K & key, D & data);
 	void insert(const K & key,const D & data);
@@ -45,6 +45,10 @@ public:
 	node<K,D>* getParent(const K & key);
 	void print(node<K,D> *n);
 	void print(int num);
+	void print2(node<K,D> *n);
+	void print2();
+	void printOficial(int num);
+	void printOficial(ofstream & es, node<K,D> *n);
 	virtual ~avl(){};
 
 private:
