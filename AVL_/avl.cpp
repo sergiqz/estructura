@@ -9,19 +9,11 @@ int main(){
 	
 	for(int i=1; i<100; i++){
 		avl.insert(i,i);
-		//avl.print();
-	}
-	
-	//avl.insert(10,5);
-	//avl.insert(8,5);
-	//avl.insert(12,5);
-	//avl.insert(6,5);
+		avl.print(i);
 
+	}
+
+	//avl.remove(64);
 	//avl.print();
-	//bst.remove_v2(2);
-	
-	//avl.print();
-	avl.remove(64);
-	avl.print();
 	return 0;
 }

@@ -86,12 +86,17 @@ int avl<K,D>::getSize(node<K,D> *n)
 }
 
 template <class K, class D>
-void avl<K,D>::print(){
+void avl<K,D>::print(int num){
+	string s = to_string(num);
+	string pt1="dot.lnk -Tpng  < grap.dot > ";
+	string pt3=".png";
+	string rt=""+ pt1 +""+ s +""+ pt3 +"";
+	char *buffer = rt.c_str();
 	os<<"graph {"<<endl;
 	os<<p_root->key<<endl;
 	print(p_root);
 	os<<"}"<<endl;
-	system("dot.lnk -Tpng  < grap.dot > out2.png");
+	system(buffer);
 }
 
 template <class K, class D>

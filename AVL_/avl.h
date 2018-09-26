@@ -44,7 +44,7 @@ public:
 	bool remove(node<K,D> **n, const K & key);
 	node<K,D>* getParent(const K & key);
 	void print(node<K,D> *n);
-	void print();
+	void print(int num);
 	virtual ~avl(){};
 
 private:
