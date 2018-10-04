@@ -36,6 +36,9 @@ public:
 	rb();
 	bool insert(const K & key,const D & data);
 	node<K,D> * insert(const K & key,const D & data, node<K,D> ** n, node<K,D> ** p);
+	bool remove(const K & key,const D & data);
+	node<K,D> * remove(const K & key,const D & data, node<K,D> ** n, node<K,D> ** p);
+	node<K,D> * min(node<K,D> **n);
 	bool turnSide(node<K,D> **n, bool side);
 	color_t getColor(node<K,D> *&n);
     void setColor(node<K,D> *&n, color_t color);

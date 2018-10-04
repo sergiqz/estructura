@@ -10,8 +10,11 @@ int main(){
 	for (int i = 1; i < 11; ++i)
 	{
 		rb.insert(i,i);
-		rb.printARBOL(i);
+		
 	}
+		rb.printARBOL(1);
+		rb.remove(3,3);
+		rb.printARBOL(2);
 		/*rb.insert(1,1);
 		rb.insert(2,1);
 		rb.insert(3,1);

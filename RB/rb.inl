@@ -67,6 +67,94 @@ node<K,D> * rb<K,D>::insert(const K & key,const D & data, node<K,D> ** n, node<K
 }
 
 template<class K,class D>
+bool rb<K,D>::remove(const K & key,const D & data){
+	remove(key,data,&p_root,NULL);
+	return true;
+}
+
+template<class K, class D>
+node<K,D> * rb<K,D>::remove(const K & key,const D & data, node<K,D> ** n, node<K,D> ** p){
+	node<K,D> *tmp;
+	if(!(*n)){
+		return NULL;
+	}
+	if((*n)->key==key){
+		if((*n)->p_child[0] and (*n)->p_child[1]){
+			tmp = min(&(*n)->p_child[1]);
+			(*n)->key = tmp->key;
+			remove((*n)->key,(*n)->data,&(*n)->p_child[1],NULL);
+		}
+		else{
+			tmp = (*n);
+			if(!((*n)->p_child[0])){
+				(*n) = (*n)->p_child[1];
+			}
+			else{
+				if(!((*n)->p_child[1])){
+					(*n) = (*n)->p_child[0];
+				}
+			}
+			delete tmp;
+		}
+		if(!(*n)){
+			return NULL;
+		}
+	}
+	bool idx_child = ((*n)->key < key);
+	node<K,D> *child = remove(key,data,&(*n)->p_child[idx_child],n);
+	if(!child){
+		return (*n);
+	}
+	if(!p){
+		return NULL;
+	}
+	if((getColor(child)==RED) and (getColor(*n)==RED)){
+		bool idx_parent = ((*p)->p_child[1] == (*n));
+		node<K,D> *uncle = (*p)->p_child[!idx_parent];
+		if(getColor(uncle)==RED){
+			(*n)->color = BLACK;
+			uncle->color = BLACK;
+			(*p)->color = RED;
+			p_root->color = BLACK;
+			return (*n);
+		}
+		if(getColor(uncle)==BLACK){
+			if(idx_child!=idx_parent){
+				turnSide(n,idx_child);
+				turnSide(p,idx_parent);
+				(*p)->color = BLACK;
+				(*p)->p_child[0]->color = RED;
+				(*p)->p_child[1]->color = RED;
+				p_root->color = BLACK;
+			}
+			else{
+				turnSide(p,idx_parent);
+				(*p)->color = BLACK;
+				(*p)->p_child[!idx_parent]->color = RED;
+				p_root->color = BLACK;
+			}
+		}	
+	}
+	return (*n); 
+}
+
+template<class K,class D>
+node<K,D>* rb<K,D>::min(node<K,D> **n)
+{
+	if (!(*n))
+	{
+		return NULL;
+	}
+	else{
+		if(!((*n)->p_child[0])){
+			return (*n);
+		}
+		else{
+			return min(&((*n)->p_child[0]));
+		}
+	}
+}
+template<class K,class D>
 bool rb<K,D>::turnSide(node<K,D> **n, bool side)
 {
 	node<K,D> *mid = (*n)->p_child[side];
