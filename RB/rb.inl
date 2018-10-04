@@ -5,7 +5,6 @@ node<K,D>::node(const K & k, const D & d){
 	p_child[0]=NULL;
 	p_child[1]=NULL;
 	color=RED;
-	parent=NULL;
 }
 
 template<class K, class D>
@@ -14,87 +13,57 @@ rb<K,D>::rb(){
 }
 
 template<class K,class D>
-void rb<K,D>::insert(const K & key,const D & data){
-	node<K,D>*p,*q;
-	node<K,D>*t=new node<K,D>(key,data);
-	t->key=key;
-	p=p_root;
-	q=NULL;
-	if(p_root==NULL)
-	{
-	    p_root=t;
-	    t->parent=NULL;
-	}
-	else
-	{
-	    while(p!=NULL)
-	    {
-	        q=p;
-	        if(p->key<t->key){
-	            p=p->p_child[1];
-	        }
-	        else{
-	            p=p->p_child[0];
-	        }
-	    }
-	    t->parent=q;
-	    if(q->key<t->key){
-	        q->p_child[1]=t;
-	    }
-	    else{
-	        q->p_child[0]=t;
-	    }
-	}
-    fixInsertRBTree(t);
+bool rb<K,D>::insert(const K & key,const D & data){
+	insert(key,data,&p_root,NULL);
+	return true;
 }
 
-template<class K,class D>
-void rb<K,D>::fixInsertRBTree(node<K,D> *&ptr){
-	node<K,D> *parent = NULL;
-    node<K,D> *grandparent = NULL;
-    while(ptr != p_root and getColor(ptr) == RED and getColor(ptr->parent) == RED) {
-        parent = ptr->parent;
-        grandparent = parent->parent;
-        if(parent == grandparent->p_child[0]){
-            node<K,D> *tio = grandparent->p_child[1];
-            if(getColor(tio) == RED){
-                setColor(tio, BLACK);
-                setColor(parent, BLACK);
-                setColor(grandparent, RED);
-                ptr = grandparent;
-            } 
-            else{
-                if(ptr == parent->p_child[1]){
-                    rotacionizq(parent);
-                    ptr = parent;
-                    parent = ptr->parent;
-                }
-                rotacionder(grandparent);
-                swap(parent->color, grandparent->color);
-                ptr = parent;
-            }
-        }
-        else{
-            node<K,D> *tio = grandparent->p_child[0];
-            if(getColor(tio) == RED){
-                setColor(tio, BLACK);
-                setColor(parent, BLACK);
-                setColor(grandparent, RED);
-                ptr = grandparent;
-            }
-            else{
-                if(ptr == parent->p_child[0]){
-                    rotacionder(parent);
-                    ptr = parent;
-                    parent = ptr->parent;
-                }
-                rotacionizq(grandparent);
-                swap(parent->color, grandparent->color);
-                ptr = parent;
-            }
-        }
-    }
-    setColor(p_root, BLACK);   
+template<class K, class D>
+node<K,D> * rb<K,D>::insert(const K & key,const D & data, node<K,D> ** n, node<K,D> ** p){
+	if(!(*n)){
+		(*n) = new node<K,D>(key,data);
+		(*n)->color = RED;
+		return (*n);
+	}
+	if((*n)->key==key){
+		return NULL;
+	}
+	bool idx_child = ((*n)->key < key);
+	node<K,D> *child = insert(key,data,&(*n)->p_child[idx_child],n);
+	if(!child){
+		return (*n);
+	}
+	if(!p){
+		return NULL;
+	}
+	if((getColor(child)==RED) and (getColor(*n)==RED)){
+		bool idx_parent = ((*p)->p_child[1] == (*n));
+		node<K,D> *uncle = (*p)->p_child[!idx_parent];
+		if(getColor(uncle)==RED){
+			(*n)->color = BLACK;
+			uncle->color = BLACK;
+			(*p)->color = RED;
+			p_root->color = BLACK;
+			return (*n);
+		}
+		if(getColor(uncle)==BLACK){
+			if(idx_child!=idx_parent){
+				turnSide(n,idx_child);
+				turnSide(p,idx_parent);
+				(*p)->color = BLACK;
+				(*p)->p_child[0]->color = RED;
+				(*p)->p_child[1]->color = RED;
+				p_root->color = BLACK;
+			}
+			else{
+				turnSide(p,idx_parent);
+				(*p)->color = BLACK;
+				(*p)->p_child[!idx_parent]->color = RED;
+				p_root->color = BLACK;
+			}
+		}	
+	}
+	return (*n); 
 }
 
 template<class K,class D>
@@ -120,58 +89,6 @@ void rb<K,D>::setColor(node<K,D> *&n, color_t color) {
         return;
     }
     n->color = color;
-}
-
-template<class K,class D>
-void rb<K,D>::rotacionizq(node<K,D>*& ptr){
-    node<K,D> *right_child = ptr->p_child[1];
-    ptr->p_child[1] = right_child->p_child[0];
-    if (ptr->p_child[1] != NULL){
-        ptr->p_child[1]->parent = ptr;
-    }
-
-    right_child->parent = ptr->parent;
-
-    if (ptr->parent == NULL){
-        p_root = right_child;
-    }
-    else{
-    	if (ptr == ptr->parent->p_child[0]){
-        	ptr->parent->p_child[0] = right_child;
-    	}
-   
-	    else{
-	        ptr->parent->p_child[1] = right_child;
-	    }
-	}
-    right_child->p_child[0] = ptr;
-    ptr->parent = right_child; 
-}
-
-template<class K,class D>
-void rb<K,D>::rotacionder(node<K,D>*& ptr){
-    node<K,D> *left_child = ptr->p_child[0];
-    ptr->p_child[0] = left_child->p_child[1];
-
-    if (ptr->p_child[0] != NULL){
-        ptr->p_child[0]->parent = ptr;
-    }
-
-    left_child->parent = ptr->parent;
-
-    if (ptr->parent == NULL){
-        p_root = left_child;
-    }
-    else{ 
-    	if (ptr == ptr->parent->p_child[0]){
-        	ptr->parent->p_child[0] = left_child;
-    	}
-	    else{
-	        ptr->parent->p_child[1] = left_child;
-	    }
-	}
-    left_child->p_child[1] = ptr;
-    ptr->parent = left_child;
 }
 
 template<class K, class D>

@@ -20,7 +20,6 @@ private:
 	K key;
 	D data;
 	color_t color;
-	node<K,D> *parent;
 	node<K,D> *p_child[2];
 public:
 	node(const K & k, const D & d);
@@ -35,10 +34,8 @@ private:
 	node<K,D> *p_root;
 public:
 	rb();
-	void insert(const K & key,const D & data);
-	void fixInsertRBTree(node<K,D> *&ptr);
-	void rotacionizq(node<K,D>*& ptr);
-    void rotacionder(node<K,D>*& ptr);
+	bool insert(const K & key,const D & data);
+	node<K,D> * insert(const K & key,const D & data, node<K,D> ** n, node<K,D> ** p);
 	bool turnSide(node<K,D> **n, bool side);
 	color_t getColor(node<K,D> *&n);
     void setColor(node<K,D> *&n, color_t color);

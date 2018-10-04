@@ -6,6 +6,7 @@ using namespace std;
 int main(){
 
 	rb<int,int> rb;
+	
 	for (int i = 1; i < 11; ++i)
 	{
 		rb.insert(i,i);
