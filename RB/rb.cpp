@@ -1,24 +1,30 @@
-#include "rb.h"
 #include <iostream>
-#include <stdlib.h>
+#include <bits/stdc++.h>
+#include "rb.h"
 using namespace std;
-
 int main(){
+	rb<int,int> rb1;
 
-	rb<int,int> rb;
-	
-	for (int i = 1; i < 11; ++i)
-	{
-		rb.insert(i,i);
-		
-	}
-		rb.printARBOL(1);
-		rb.remove(3,3);
-		rb.printARBOL(2);
-		/*rb.insert(1,1);
-		rb.insert(2,1);
-		rb.insert(3,1);
-		rb.insert(4,1);*/
-	
-	return 0;
+
+	int iSecret, jSecret;
+    srand (time(NULL));
+
+
+    for(int i=1;i<30;i++){
+        iSecret = rand() % 30 + 1;
+        rb1.insert(iSecret,jSecret);
+        rb1.printARBOL(i);
+        
+       
+    }
+
+/*
+    for(int i=31;i<60;i++){
+        iSecret = rand() % 30 + 1;
+        rb1.remove(iSecret,jSecret);
+        rb1.dibujararbol(i);
+        cout<<iSecret<<endl;
+       
+    }
+*/
 }
