@@ -182,13 +182,10 @@ int rb<K,D>::max(int a,int b){
 
 template<class K,class D>
 void rb<K,D>::fixRedblack(node<K,D> **n,node<K,D> **p,bool child,node<K,D> *aux) {
-    
-
     if((getColor(aux)==RED) and (getColor(*p)==RED)){
         bool parent = ((*n)->p_child[1] == (*p));
         node<K,D> *tio = (*n)->p_child[!parent];
         if(getColor(tio)==RED){
-            
             (*p)->color = BLACK;
             tio->color = BLACK;
             (*n)->color = RED;
@@ -198,21 +195,14 @@ void rb<K,D>::fixRedblack(node<K,D> **n,node<K,D> **p,bool child,node<K,D> *aux)
         if(getColor(tio)==BLACK){
             if(child!=parent){
                 balance(p,child);
-                balance(n,parent);
-                //cout<<(*p)->key<<endl;
-                //cout<<(*p)->p_child[0]->key<<endl;
-                
-                if((getColor(*p)==RED) and (getColor((*p)->p_child[0])==RED)){
-
-                    
+                balance(n,parent);    
+                if((getColor(*p)==RED) and (getColor((*p)->p_child[0])==RED)){ 
                     (*p)->p_child[0]->color==BLACK;
                 }
-                
                 (*n)->color = BLACK;
                 (*n)->p_child[0]->color = RED;
                 (*n)->p_child[1]->color = RED;
-                root->color = BLACK;
-                
+                root->color = BLACK; 
             }
             else{
                 balance(n,parent);
@@ -222,6 +212,7 @@ void rb<K,D>::fixRedblack(node<K,D> **n,node<K,D> **p,bool child,node<K,D> *aux)
             }
         }   
     }
+    root->color = BLACK;
     return;     
 }
 
