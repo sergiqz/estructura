@@ -1,0 +1,14 @@
+digraph {
+p0xf21068 [label="[15 , 20]\l40"]
+p0xf21068
+p0xf21088 [label="[10 , 30]\l30"]
+p0xf21068->p0xf21088
+p0xf210c8 [label="[5 , 20]\l20"]
+p0xf21088->p0xf210c8
+p0xf210e8 [label="[12 , 15]\l15"]
+p0xf21088->p0xf210e8
+p0xf210a8 [label="[17 , 19]\l40"]
+p0xf21068->p0xf210a8
+p0xf21108 [label="[30 , 40]\l40"]
+p0xf210a8->p0xf21108
+}
