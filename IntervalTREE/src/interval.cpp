@@ -13,7 +13,7 @@ int main(){
 	IT.insert(5,20);
 	IT.insert(12,15);
 	IT.insert(30,40);
-	//IT.print();
-	IT.overlapSearch(100,500);
+	IT.print();
+	IT.overlapSearch(6,7);
 	return 0;
 }
