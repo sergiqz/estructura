@@ -1,6 +1,6 @@
 # Interval Tree
 
-![alt text](https://github.com/kenny181920/estructura/blob/master/IntervalTREE/Recursos/intervalGRAF.png "Interval Tree")
+![](https://github.com/kenny181920/estructura/blob/master/IntervalTREE/Recursos/intervalGRAF.png "Interval Tree")
 
 ## Description
 An interval tree can be used to efficiently find a set of numerical ranges that overlap or contain another range.
